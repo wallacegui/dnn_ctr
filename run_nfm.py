@@ -72,6 +72,6 @@ if __name__ == "__main__":
     model = NFM(CONTINUOUS_COLUMNS+CATEGORICAL_COLUMNS,features_num_dict).model
     validation_data=(model_valid,y_valid)
 
-    model.compile("adam", "binary_crossentropy",metrics=['acc'],)
+    model.compile("adam", "mse",metrics=['acc'],)
     early_stopping = EarlyStopping(monitor='val_loss', patience=1, verbose=1)
     model.fit(model_train, y_train,batch_size=batch_size, epochs=epochs, verbose=1, shuffle=True,validation_data=validation_data,callbacks=[early_stopping,AUCCallback(validation_data=validation_data)])
