@@ -56,12 +56,7 @@ class NFM:
             fc_input = BatchNormalization()(fc_input)
             fc_input = Activation('relu')(fc_input)
         fc_input = Reshape((self.hidden_layer[-1],))(fc_input)
-        ## lr part
-        if self.with_fm:
-            lr_input = concatenate([y_fm,fc_input],axis=-1)
-        else:
-            lr_input = fc_input
-        lr_input = Dense(1)(lr_input)
+        lr_input = Dense(1)(fc_input)
         y_predict = Activation('sigmoid',name='y_predict')(lr_input)
         model = Model(inputs=inputs, outputs=y_predict)
         return model
