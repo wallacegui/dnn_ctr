@@ -26,7 +26,7 @@ from layers.MyMeanPool import MyMeanPool
 
 
 class NFM:
-    def __init__(self,sparse_features,features_num_dict,with_fm=True,k=128,hidden_layer=[128],optimizer=Adam(0.001)):
+    def __init__(self,sparse_features,features_num_dict,with_fm=True,k=256,hidden_layer=[128],optimizer=Adam(0.001)):
         self.sparse_features = sparse_features
         self.features_num_dict = features_num_dict
         self.with_fm = with_fm
