@@ -69,14 +69,14 @@ if __name__ == "__main__":
     for feature in CONTINUOUS_COLUMNS + CATEGORICAL_COLUMNS:
         features_num_dict[feature] = int(df[feature].max()+1)
 
-    model = DeepFM(CONTINUOUS_COLUMNS+CATEGORICAL_COLUMNS,features_num_dict).model
+    model = NFM(CONTINUOUS_COLUMNS+CATEGORICAL_COLUMNS,features_num_dict).model
     validation_data=(model_valid,y_valid)
 
     model.compile("adam", "binary_crossentropy",metrics=['acc'],)
     early_stopping = EarlyStopping(monitor='val_loss', patience=1, verbose=1)
     model.fit(model_train, y_train,batch_size=batch_size, epochs=epochs, verbose=1, shuffle=True,validation_data=validation_data,callbacks=[early_stopping,AUCCallback(validation_data=validation_data)])
 
-    model = DeepFM(CONTINUOUS_COLUMNS+CATEGORICAL_COLUMNS,features_num_dict,with_fm=False).model
+    model = NFM(CONTINUOUS_COLUMNS+CATEGORICAL_COLUMNS,features_num_dict,with_fm=False).model
     validation_data=(model_valid,y_valid)
 
     model.compile("adam", "binary_crossentropy",metrics=['acc'],)
