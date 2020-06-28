@@ -26,7 +26,7 @@ from layers.MyMeanPool import MyMeanPool
 
 
 class NFM:
-    def __init__(self,sparse_features,features_num_dict,with_fm=True,k=10,hidden_layer=[256,128,64],optimizer=Adam(0.001)):
+    def __init__(self,sparse_features,features_num_dict,with_fm=True,k=10,hidden_layer=[128],optimizer=Adam(0.001)):
         self.sparse_features = sparse_features
         self.features_num_dict = features_num_dict
         self.with_fm = with_fm
@@ -49,9 +49,8 @@ class NFM:
         vi_squere_xi_squere = add([keras_squere(x) for x in field_embeddings])
         y_fm = subtract([vixi_squere,vi_squere_xi_squere])
         y_fm = Reshape((self.k,))(y_fm)
+        fc_input = BatchNormalization()(y_fm)
         ## fc part
-        # embeedings (-1,len*k)
-        fc_input =  concatenate(field_embeddings,axis=-1)
         for n in self.hidden_layer:
             fc_input = Dense(n)(fc_input)
             fc_input = BatchNormalization()(fc_input)
